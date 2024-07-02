@@ -1,0 +1,248 @@
+<div class="">
+  @if (!islistview) {
+  <div class="container pt-0">
+    <div class="row">
+      <div class="col-12 text-end">
+        <button
+          [class]="
+            islistview ? 'btn btn-sm btn-success' : 'btn btn-sm btn-primary'
+          "
+          (click)="islistview = !islistview"
+        >
+          Toggle View
+        </button>
+      </div>
+    </div>
+    <div class="row justify-content-center align-items-center">
+      <div class="col-lg-9 text-center">
+        <h1 class="heading" data-aos="fade-up">Create New Property</h1>
+        <form
+          [formGroup]="propertyForm"
+          (ngSubmit)="createproperty()"
+          class="narrow-w form-search align-items-stretch mb-3"
+          data-aos="fade-up"
+          data-aos-delay="200"
+        >
+          <div class="row">
+            <div class="col-12">
+              <input
+                type="text"
+                name="title"
+                formControlName="title"
+                class="form-control px-4"
+                placeholder="Title"
+              />
+              <small
+                *ngIf="
+                  propertyForm.get('title')?.invalid &&
+                  propertyForm.get('title')?.touched
+                "
+                class="text-danger"
+                >Title is Required</small
+              >
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col-6">
+              <textarea
+                name="description"
+                formControlName="description"
+                class="form-control px-4"
+                placeholder="Description"
+                id=""
+              ></textarea>
+              <small
+                *ngIf="
+                  propertyForm.get('description')?.invalid &&
+                  propertyForm.get('description')?.touched
+                "
+                class="text-danger"
+                >Description is Required</small
+              >
+            </div>
+            <div class="col-6">
+              <textarea
+                name="address"
+                formControlName="address"
+                class="form-control px-4"
+                placeholder="Address"
+                id=""
+              ></textarea>
+              <small
+                *ngIf="
+                  propertyForm.get('address')?.invalid &&
+                  propertyForm.get('address')?.touched
+                "
+                class="text-danger"
+                >Address is Required</small
+              >
+            </div>
+          </div>
+          <div class="row pt-3 pb-3">
+            <div class="col-4">
+              <input
+                type="text"
+                name="city"
+                formControlName="city"
+                class="form-control px-4"
+                placeholder="City"
+              />
+              <small
+                *ngIf="
+                  propertyForm.get('city')?.invalid &&
+                  propertyForm.get('city')?.touched
+                "
+                class="text-danger"
+                >City is Required</small
+              >
+            </div>
+            <div class="col-4">
+              <input
+                type="text"
+                name="state"
+                formControlName="state"
+                class="form-control px-4"
+                placeholder="State"
+              />
+              <small
+                *ngIf="
+                  propertyForm.get('state')?.invalid &&
+                  propertyForm.get('state')?.touched
+                "
+                class="text-danger"
+                >State is Required</small
+              >
+            </div>
+            <div class="col-4">
+              <input
+                type="number"
+                name="pincode"
+                formControlName="pincode"
+                class="form-control px-4"
+                placeholder="Pincode"
+              />
+              <small
+                *ngIf="
+                  propertyForm.get('pincode')?.invalid &&
+                  propertyForm.get('pincode')?.touched
+                "
+                class="text-danger"
+                >Pincode is Required</small
+              >
+            </div>
+          </div>
+          <div class="row pt-3 pb-3">
+            <div class="col-6">
+              <input
+                type="text"
+                name="ptype"
+                formControlName="ptype"
+                class="form-control px-4"
+                placeholder="Property Type"
+              />
+              <small
+                *ngIf="
+                  propertyForm.get('ptype')?.invalid &&
+                  propertyForm.get('ptype')?.touched
+                "
+                class="text-danger"
+                >Propert Type is Required</small
+              >
+            </div>
+            <div class="col-6">
+              <input
+                type="number"
+                name="price"
+                formControlName="price"
+                class="form-control px-4"
+                placeholder="Price"
+              />
+              <small
+                *ngIf="
+                  propertyForm.get('price')?.invalid &&
+                  propertyForm.get('price')?.touched
+                "
+                class="text-danger"
+                >Price is Required</small
+              >
+            </div>
+          </div>
+          <div class="row pt-3 pb-3">
+            <div class="col-12">
+              <input
+                type="text"
+                name="image"
+                formControlName="image"
+                class="form-control px-4"
+                placeholder="Thumbnail Image"
+              />
+              <small
+                *ngIf="
+                  propertyForm.get('image')?.invalid &&
+                  propertyForm.get('image')?.touched
+                "
+                class="text-danger"
+                >Image is Required</small
+              >
+            </div>
+          </div>
+          <ng-container *ngIf="!propertyForm.value.propertyId">
+            <button type="button" class="btn btn-primary mt-4" (click)="createproperty()">
+              Add Property
+            </button>
+          </ng-container>
+          <ng-container *ngIf="propertyForm.value.propertyId">
+            <button type="button" class="btn btn-success mt-4" (click)="updatedataproperty()">
+              Update Property
+            </button>
+          </ng-container>
+        </form>
+      </div>
+    </div>
+  </div>
+  } @else {
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-end">
+        <button
+          [class]="
+            islistview ? 'btn btn-sm btn-success' : 'btn btn-sm btn-primary'
+          "
+          (click)="islistview = !islistview"
+        >
+          Toggle View
+        </button>
+      </div>
+    </div>
+    <table class="table table-bordered text-center mt-4 table-striped">
+      <thead>
+        <th>Sr.No</th>
+        <th>Thumbnail Image</th>
+        <th>Title</th>
+        <th>Property Type</th>
+        <th>Description</th>
+        <th>City</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of propertylist; track let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>
+            <img width="100px" height="100px" [src]="item.image" />
+          </td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.ptype }}</td>
+          <td>{{ item.description }}</td>
+          <td>{{ item.city }}</td>
+          <td>
+            <button class="btn btn-sm btn-success" (click)="onedit(item)">
+              Edit
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="onDelete(item.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  }
+</div>

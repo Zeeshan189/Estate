@@ -1,0 +1,243 @@
+<div class="section">
+  <div class="container">
+    <form [formGroup]="filterForm" (ngSubmit)="applyFilters()">
+      <div class="row justify-content-center">
+        <div class="col-lg-2">
+          <div class="form-group">
+            <label for="city">City</label>
+            <select
+              id="city"
+              class="form-control form-select"
+              formControlName="city"
+            >
+              <option value="">Select City</option>
+              <option value="Lahore">Lahore</option>
+              <option value="Karachi">Karachi</option>
+              <option value="Faisalabad">Faisalabad</option>
+              <option value="Multan">Multan</option>
+              <option value="Gujrat">Gujrat</option>
+              <option value="Islamabad">Islamabad</option>
+              <option value="Gojra">Gojra</option>
+              <option value="Rawalpindi">Rawalpindi</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <div class="form-group">
+            <label for="Address">Address</label>
+            <select
+              id="Address"
+              class="form-control form-select"
+              formControlName="address"
+            >
+              <option value="">Select Address</option>
+              <option value="DHA">DHA</option>
+              <option value="Gulberg">Gulberg</option>
+              <option value="Samundari">Samundari</option>
+              <option value="Canal Road">Canal Road</option>
+              <option value="Jaranwala">Jaranwala</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <div class="form-group">
+            <label for="ptype">Property Type</label>
+            <select
+              id="ptype"
+              class="form-control form-select"
+              formControlName="ptype"
+            >
+              <option value="">Select Property Type</option>
+              <option value="House">House</option>
+              <option value="Apartment">Apartment</option>
+              <option value="Farm House">Farm House</option>
+              <option value="Flat">Flat</option>
+              <option value="Penthouse">Penthouse</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <div class="form-group">
+            <label for="state">Minimum Area</label>
+            <select
+              id="state"
+              class="form-control form-select"
+              formControlName="state"
+            >
+              <option value="">Select Min Area</option>
+              <option value="2 Marla">2 Marla</option>
+              <option value="3 Marla">3 Marla</option>
+              <option value="5 Marla">5 Marla</option>
+              <option value="8 Marla">8 Marla</option>
+              <option value="10 Marla">10 Marla</option>
+              <option value="15 Marla">15 Marla</option>
+              <option value="1 Kanal">1 Kanal</option>
+              <option value="1.5 Kanal">1.5 Kanal</option>
+              <option value="2 Kanal">2 Kanal</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-2">
+          <div class="form-group">
+            <label for="price">Price Range</label>
+            <select
+              id="price"
+              class="form-control form-select"
+              formControlName="price"
+            >
+              <option value="">Select range</option>
+              <option value="12000">12000</option>
+              <option value="13000">13000</option>
+              <option value="16000">16000</option>
+              <option value="17000">17000</option>
+              <option value="18000">18000</option>
+              <option value="19000">19000</option>
+              <option value="20000">20000</option>
+              <option value="21000">21000</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-2 mt-4">
+          <button type="submit" class="btn btn-primary btn-sm">Search</button>
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col-lg-12" *ngIf="propertylist.length === 0">
+          <h3 class="text-center mt-4">
+            No properties found matching the selected criteria.
+          </h3>
+        </div>
+      </div>
+    </form>
+
+    <!-- <div *ngIf="propertylist.length">
+      <h2>Filtered Properties</h2>
+      <ul>
+        <li *ngFor="let property of propertylist">
+          {{ property.city }} - {{ property.address }} - {{ property.ptype }} - {{ property.state }} - {{ property.price }}
+        </li>
+      </ul>
+    </div> -->
+
+    <div class="row">
+      <div class="col-12">
+        <div class="property-slider-wrap">
+          <div class="property-slider">
+            <div class="row">
+              @for (item of visibledata(); track $index) {
+              <div class="col-3 mt-2">
+                <div class="property-item">
+                  <a class="img">
+                    <img [src]="item.image" alt="Image" class="img-fluid" />
+                  </a>
+
+                  <div class="property-content">
+                    <div class="price mb-2">
+                      <span>${{ item.price }}</span>
+                    </div>
+                    <div>
+                      <span class="d-block mb-2 text-black-50">{{
+                        item.address
+                      }}</span>
+                      <span class="city d-block mb-3"
+                        >{{ item.city }}, {{ item.state }}</span
+                      >
+
+                      <div class="specs d-flex mb-4">
+                        <span class="d-block d-flex align-items-center me-3">
+                          <span class="icon-bed me-2"></span>
+                          <span class="caption">{{ item.ptype }}</span>
+                        </span>
+                      </div>
+
+                      <a
+                        (click)="openEnquirymodel(item.propertyId)"
+                        class="btn btn-primary py-2 px-3"
+                        >Make an Enquiry</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="flex items-center justify-center">
+  <button
+    class="text-cyan-500 border-4 py-2 px-4 rounded-l-lg cursor-pointer mr-5"
+    (click)="previouspage()"
+    [disabled]="currentpage === 1"
+  >
+    Previous
+  </button>
+  @for (pagenumber of pagenumbers(); track $index) {
+  <button
+    class="bg-cyan-500 py-2 px-4 cursor-pointer"
+    [class.bg-cyan-500]="$index + 1 == currentpage"
+    [class.text-white]="$index + 1 == currentpage"
+    (click)="changepage($index + 1)"
+  >
+    {{ $index + 1 }}
+  </button>
+  }
+  <button
+    class="text-cyan-500 border-4 py-2 px-4 rounded-r-lg cursor-pointer ml-5"
+    (click)="nextpage()"
+    [disabled]="currentpage === totalpages"
+  >
+    Next
+  </button>
+</div>
+
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Make an Enquiry</h4>
+        <button
+          (click)="closeEnquirymodel()"
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form [formGroup]="enquiryForm">
+          <textarea
+            formControlName="enquirymessage"
+            placeholder="Add Your Message"
+          ></textarea>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-danger"
+          data-bs-dismiss="modal"
+          (click)="closeEnquirymodel()"
+        >
+          Close
+        </button>
+        <button
+          type="button"
+          class="btn btn-success"
+          data-bs-dismiss="modal"
+          (click)="makeEnquiry()"
+        >
+          Make Enquiry
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
